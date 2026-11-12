@@ -1,38 +1,44 @@
-from __future__ import annotations
 
-from typing import List, Optional
+from typing import List
 
 from aluno import Aluno
-
-
-class _No:
-    def __init__(self, aluno: Aluno):
-        self.aluno = aluno
-        self.proximo: Optional[_No] = None
+from lista_encadeada import ListaEncadeada
 
 
 class TabelaHash:
+    """Tabela hash de alunos com 11 posições e tratamento por lista encadeada."""
+
+    TAMANHO = 11
+
     def __init__(self):
-        self.tabela: List[Optional[_No]] = [None] * 11
+        self.tabela: List[ListaEncadeada] = [
+            ListaEncadeada() for _ in range(self.TAMANHO)
+        ]
+
+    def funcao_hash(self, matricula: int) -> int:
+        """Calcula a posição da matrícula na tabela."""
+        if not isinstance(matricula, int) or isinstance(matricula, bool):
+            raise TypeError("A matrícula deve ser um número inteiro.")
+
+        return matricula % self.TAMANHO
 
     def inserir(self, aluno: Aluno) -> bool:
+        """Insere um aluno, impedindo matrículas duplicadas."""
         if not isinstance(aluno, Aluno):
             raise TypeError("É necessário informar um objeto Aluno.")
 
-        indice = aluno.matricula % 11
-        atual = self.tabela[indice]
-        novo_no = _No(aluno)
+        indice = self.funcao_hash(aluno.matricula)
 
-        if atual is None:
-            self.tabela[indice] = novo_no
-            return True
+        return self.tabela[indice].inserir_no_final(aluno)
 
-        while True:
-            if atual.aluno.matricula == aluno.matricula:
-                return False
+    def buscar(self, matricula: int):
+        """Busca um aluno pela matrícula."""
+        indice = self.funcao_hash(matricula)
 
-            if atual.proximo is None:
-                atual.proximo = novo_no
-                return True
+        return self.tabela[indice].buscar(matricula)
 
-            atual = atual.proximo
+    def remover(self, matricula: int) -> bool:
+        """Remove um aluno pela matrícula."""
+        indice = self.funcao_hash(matricula)
+
+        return self.tabela[indice].remover(matricula)
