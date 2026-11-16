@@ -61,11 +61,11 @@ def main():
     tabela = TabelaHash()
 
     opcoes = {
-        "1": ("Inserir aluno", menu_inserir),
-        "2": ("Buscar aluno", menu_buscar),
-        "3": ("Remover aluno", menu_remover),
-        "4": ("Exibir tabela hash (11 posições)", menu_exibir),
-        "5": ("Sair", None),
+        "1": ("Inserir novo Aluno", menu_inserir),
+        "2": ("Buscar Aluno", menu_buscar),
+        "3": ("Remover Aluno", menu_remover),
+        "4": ("Exibir Tabela Hash", menu_exibir),
+        "5": ("Encerrar Sistema", None),
     }
 
     while True:
