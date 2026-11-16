@@ -42,3 +42,13 @@ class TabelaHash:
         indice = self.funcao_hash(matricula)
 
         return self.tabela[indice].remover(matricula)
+
+    def exibir(self) -> None:
+        print(self.__str__())
+
+    def __str__(self) -> str:
+        linhas = ["=== TABELA HASH (11 POSIÇÕES) ==="]
+        for i, lista in enumerate(self.tabela):
+            linhas.append(f"Posição [{i:2d}]: {lista}")
+        return "\n".join(linhas)
+

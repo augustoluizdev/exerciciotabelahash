@@ -69,3 +69,15 @@ class ListaEncadeada:
             atual = atual.proximo
 
         return False
+
+    def __iter__(self):
+        atual = self.primeiro
+        while atual is not None:
+            yield atual.aluno
+            atual = atual.proximo
+
+    def __str__(self) -> str:
+        if self.esta_vazia():
+            return "Vazia"
+        elementos = [f"[{aluno.matricula}: {aluno.nome} ({aluno.idade}a)]" for aluno in self]
+        return " -> ".join(elementos)
